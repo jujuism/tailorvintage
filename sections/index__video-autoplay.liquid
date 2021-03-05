@@ -1,0 +1,29 @@
+{% comment %}
+** Video Autoplay - dynamic **
+- Draggable section
+{% endcomment %}
+
+{% include 'include-video-autoplay' %}
+
+{% schema %}
+{
+  "name": "Video with Autoplay",
+  "class": "video-autoplay",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video with Autoplay"
+    },
+    {
+      "type": "text",
+      "id": "video_ap",
+      "label": "URL to your video",
+      "default": "https://cdn.shopify.com/s/files/1/0864/3042/files/airotec_beer_test_103.mp4?v=1604104036"
+    }],
+  "presets": [{
+    "name": "Video Autoplay",
+    "category": "Video"
+  }]
+}
+
+{% endschema %}

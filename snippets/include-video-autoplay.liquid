@@ -1,0 +1,18 @@
+{% comment %}
+  Snippet can be used in section or block
+  eg. {% include 'include-video-autoplay' %}
+{% endcomment %}
+
+<section id="section-{{ section.id }}">
+  <div class="container video__container">
+	<div class="one-whole column">
+		<div class="video-wrapper">
+			<div class="video-element" data-video-element>
+				<video playsinline autoplay muted loop class="myVideo">
+      				<source src="{{ section.settings.video_ap }}" type="video/mp4"></source>
+              	</video> 
+            </div>
+		</div>
+	</div>
+</div>
+</section>
