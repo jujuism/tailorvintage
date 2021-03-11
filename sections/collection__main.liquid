@@ -1,3 +1,5 @@
+
+
 {% comment %}
 ** Collections - main view **
 - Collection main area that holds the promotion banner, thumbnails and pagination
@@ -29,6 +31,7 @@
       max-width: 95%;
     {%- endif %}
   }
+
 
   .on-subcollection-page.section__wrapper {
     {% if width == 'wide' -%}
@@ -145,6 +148,11 @@
     "pagination_type": {{ object.settings.pagination_type | json }},
     "number_of_pages": {{ paginate.pages | json }}
   }
+</script>
+
+<script type="text/javascript">
+{% for block in section.blocks %}
+$(".collection-matrix > .one-third:nth-child({{ block.settings.placement }})").after("<div class='marketing-block {{ block.settings.style }} {{ block.settings.alignment }}' style='background-color: {{ block.settings.bg_color }}; color: {{ block.settings.text_color }}; {% if block.settings.bg_image != nil %}background-image: url({{ block.settings.bg_image | img_url: 'master' }});{% endif %}'><div class='text'><h2 style='color: {{ block.settings.text_color }};'>{{ block.settings.block_title }}</h2><p>{{ block.settings.block_description }}</p></div><div class='btn'><a href='{{ block.settings.cta_url }}' class='btn btn--primary' style='color: {{ block.settings.cta_text_color }}; background: {{ block.settings.cta_bg_color }}'>{{ block.settings.cta_title }}</a></div></div>");{% endfor %}
 </script>
 
 {% endpaginate %}
@@ -360,6 +368,98 @@
       "type": "textarea",
       "id": "custom_css",
       "label": "Custom CSS"
+    }
+  ],
+  "blocks": [
+    { 
+      "type": "marketing_blocks",
+      "name": "Marketing Blocks",
+      "settings": [
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Marketing Block Layout",
+          "options": [
+            {
+              "value": "horizontal",
+              "label": "Horizontal"
+            },
+            {
+              "value": "vertical",
+              "label": "Vertical"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Marketing Text Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "placement",
+          "label": "Block Placement"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "Background Image"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color"
+        },
+        {
+          "type": "text",
+          "id": "block_title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "block_description",
+          "label": "Text"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color"
+        },
+        {
+          "type": "text",
+          "id": "cta_title",
+          "label": "CTA Title"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "CTA Url"
+        },
+        {
+          "type": "color",
+          "id": "cta_bg_color",
+          "label": "Background Color"
+        },
+        {
+          "type": "color",
+          "id": "cta_text_color",
+          "label": "Text Color"
+        }
+      ]
     }
   ]
 }

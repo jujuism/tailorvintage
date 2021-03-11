@@ -15308,3 +15308,52 @@ form.header__search-form.search-form {
 
 /* # Custom Styles
 ================================================== */
+
+/* --- collection page dividers --- */
+.marketing-block {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  &.horizontal {
+    width: calc(33.33333% - 20px);
+    margin-left: calc(20px / 2);
+    margin-right: calc(20px / 2);
+    margin-bottom: calc(20px / 2);
+  }
+
+  &.vertical {
+    width: 100%;
+    margin: 50px 0 50px 0;
+  }
+
+  &.left {
+    text-align: left;
+  }
+
+  &.right {
+    text-align: right;
+  }
+
+  &.center {
+    text-align: center;
+  }
+
+  .text {
+    margin: 0 0 50px 0;
+
+    h2 {
+      margin: 0 0 20px 0;
+    }
+  }
+
+  .btn {
+    a.btn.btn--primary {
+      padding: 10px 30px;
+    }
+  }
+}
