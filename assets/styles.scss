@@ -15324,6 +15324,10 @@ form.header__search-form.search-form {
     margin-left: calc(20px / 2);
     margin-right: calc(20px / 2);
     margin-bottom: calc(20px / 2);
+
+    @media only screen and (max-width: 798px) {
+      width: calc(50% - 20px);
+    }
   }
 
   &.vertical {
@@ -15349,11 +15353,21 @@ form.header__search-form.search-form {
     h2 {
       margin: 0 0 20px 0;
     }
+
+    @media only screen and (max-width: 798px) {
+      p {
+        font-size: 12px;
+      }
+    }
   }
 
   .btn {
     a.btn.btn--primary {
       padding: 10px 30px;
+
+      @media only screen and (max-width: 798px) {
+        font-size: 12px;
+      }
     }
   }
 }
