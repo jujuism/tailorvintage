@@ -15323,7 +15323,32 @@ form.header__search-form.search-form {
   background-size: cover;
   background-position: center;
 
-  &.video {
+  @media only screen and (max-width: 400px) {
+    min-height: 440px;
+  }
+
+  &.video.horizontal-two,
+  &.video.horizontal {
+    @media only screen and (max-width: 400px) {
+      padding: 0;
+      min-height: 336px;
+    }
+  }
+
+  &.video.horizontal,
+  &.video.horizontal-two {
+    padding: 0 !important;
+
+    .text {
+      padding: 20px 20px 0 20px;
+    }
+
+    .btn {
+      padding: 0 20px 20px 20px;
+    }
+  }
+
+  &.video.horizontal {
     @media only screen and (max-width: 400px) {
       padding: 0;
       margin-top: 50px;
@@ -15342,7 +15367,26 @@ form.header__search-form.search-form {
     }
 
     @media only screen and (max-width: 400px) {
-      width: calc(100% - 20px);
+      min-width: calc(100% - 20px);
+      margin-bottom: calc(80px / 2);
+    }
+
+    .video {
+      max-width: calc(33.33333% - 20px);
+      margin: auto;
+      display: block;
+      max-height: 490px;
+  
+      @media only screen and (max-width: 400px) {
+        max-width: calc(100% - 20px);
+        min-height: 336px;
+        max-height: 336px;
+      }
+  
+      video.myVideo {
+        width: 100%;
+        max-height: 490px;
+      } 
     }
   }
 
@@ -15357,7 +15401,26 @@ form.header__search-form.search-form {
     }
 
     @media only screen and (max-width: 400px) {
-      width: calc(100% - 20px);
+      min-width: calc(100% - 20px);
+      margin-bottom: calc(80px / 2);
+    }
+
+    .video {
+      max-width: calc(66% - 20px);
+      margin: auto;
+      display: block;
+      max-height: 490px;
+  
+      @media only screen and (max-width: 400px) {
+        max-width: calc(100% - 20px);
+        min-height: 336px;
+        max-height: 336px;
+      }
+  
+      video.myVideo {
+        width: 100%;
+        max-height: 490px;
+      } 
     }
   }
 
@@ -15407,22 +15470,5 @@ form.header__search-form.search-form {
         font-size: 12px;
       }
     }
-  }
-
-  .video {
-    position: absolute;
-    z-index: 0;
-    max-width: calc(66% - 20px);
-    margin: auto;
-    display: block;
-
-    @media only screen and (max-width: 400px) {
-      max-width: calc(100% - 20px);
-    }
-
-    video.myVideo {
-      width: 100%;
-      height: auto;
-    } 
   }
 }

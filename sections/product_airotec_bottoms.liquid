@@ -176,6 +176,13 @@
                   {% comment %} Name {% endcomment %}
                   <h1 class="product_name title">{{ product.title }}</h1>
 
+                  {% comment %} Sku {% endcomment %}
+                  {% if variant.sku != blank and section.settings.display_sku %}
+                    <p class="sku">
+                      {{ variant.sku }}
+                      </p><br>
+                  {% endif %}
+
                   {% for tag in product.tags %}
                     {% if tag contains 'meta-size-chart-' %}
                       {% assign meta-size-chart = true %}
