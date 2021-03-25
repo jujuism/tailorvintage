@@ -15325,6 +15325,8 @@ form.header__search-form.search-form {
 
   @media only screen and (max-width: 400px) {
     min-height: 440px;
+    height: 440px;
+    max-height: 440px
   }
 
   &.video.horizontal-two,
@@ -15369,6 +15371,8 @@ form.header__search-form.search-form {
     @media only screen and (max-width: 400px) {
       min-width: calc(100% - 20px);
       margin-bottom: calc(80px / 2);
+      max-width: calc(100% - 20px);
+      width: calc(100% - 20px);
     }
 
     .video {
@@ -15403,6 +15407,8 @@ form.header__search-form.search-form {
     @media only screen and (max-width: 400px) {
       min-width: calc(100% - 20px);
       margin-bottom: calc(80px / 2);
+      max-width: calc(100% - 20px);
+      width: calc(100% - 20px);
     }
 
     .video {
