@@ -15323,7 +15323,7 @@ form.header__search-form.search-form {
   background-size: cover;
   background-position: center;
 
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: 600px) {
     min-height: 440px;
     height: 440px;
     max-height: 440px
@@ -15331,7 +15331,7 @@ form.header__search-form.search-form {
 
   &.video.horizontal-two,
   &.video.horizontal {
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 600px) {
       padding: 0;
       min-height: 336px;
     }
@@ -15351,7 +15351,7 @@ form.header__search-form.search-form {
   }
 
   &.video.horizontal {
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 600px) {
       padding: 0;
       margin-top: 50px;
       margin-bottom: 80px !important;
@@ -15368,7 +15368,7 @@ form.header__search-form.search-form {
       width: calc(50% - 20px);
     }
 
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 600px) {
       min-width: calc(100% - 20px);
       margin-bottom: calc(80px / 2);
       max-width: calc(100% - 20px);
@@ -15381,7 +15381,7 @@ form.header__search-form.search-form {
       display: block;
       max-height: 490px;
   
-      @media only screen and (max-width: 400px) {
+      @media only screen and (max-width: 600px) {
         max-width: calc(100% - 20px);
         min-height: 336px;
         max-height: 336px;
@@ -15404,7 +15404,7 @@ form.header__search-form.search-form {
       width: calc(50% - 20px);
     }
 
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 600px) {
       min-width: calc(100% - 20px);
       margin-bottom: calc(80px / 2);
       max-width: calc(100% - 20px);
@@ -15417,7 +15417,7 @@ form.header__search-form.search-form {
       display: block;
       max-height: 490px;
   
-      @media only screen and (max-width: 400px) {
+      @media only screen and (max-width: 600px) {
         max-width: calc(100% - 20px);
         min-height: 336px;
         max-height: 336px;
@@ -15434,7 +15434,7 @@ form.header__search-form.search-form {
     width: 100%;
     margin: 50px 0 50px 0;
 
-    @media only screen and (max-width: 400px) {
+    @media only screen and (max-width: 600px) {
       margin: 20px 0 20px 0;
     }
   }
