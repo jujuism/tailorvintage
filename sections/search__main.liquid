@@ -13,317 +13,159 @@
 {% assign custom_css = section.settings.custom_css %}
 
 {% style %}
-  .section__wrapper {
-    padding-top: {{ padding_top }}px;
-    padding-bottom: {{ padding_bottom }}px;
-    {% if width == 'wide' -%}
-      width: 100%;
-      max-width: 95%;
-    {%- endif %}
-  }
+	.section__wrapper {
+		padding-top: {{ padding_top }}px;
+		padding-bottom: {{ padding_bottom }}px;
+		{% if width == 'wide' -%}
+			width: 100%;
+			max-width: 95%;
+		{%- endif %}
+	}
 
-  {% if section.settings.search_breadcrumb == false %}
-    .breadcrumb__container {
-      display: none;
-    }
-  {% endif %}
+	{% if section.settings.search_breadcrumb == false %}
+		.breadcrumb__container {
+			display: none;
+		}
+	{% endif %}
 
-  {% if section.settings.pagination_type != 'basic_pagination' %}
-    .breadcrumb__page-count {
-      display: none !important;
-    }
-  {% endif %}
+	{% if section.settings.pagination_type != 'basic_pagination' %}
+		.breadcrumb__page-count {
+			display: none !important;
+		}
+	{% endif %}
 
-  {% render 'css-loop',
-          css: custom_css,
-          id: id
-  %}
+	{% include 'css-loop', css: custom_css, id: id %}
 {% endstyle %}
 
 {% assign search_pagination = section.settings.pagination_limit %}
-{% paginate search.results by search_pagination %}
 
 <main class="{{ css_class }}
-            is-width-{{ width }}
-            ">
+						is-width-{{ width }}
+						">
+	<div class="container">
+		<div class="one-whole column">
+			<form class="search-form" action="{{ routes.search_url }}">
+				<div class="search__fields">
+					{% if settings.search_option != 'everything' %}
+						<input class="visuallyhidden" type="text" name="type" value="product" />
+					{% endif %}
+					<label for="q" class="visuallyhidden">{{ settings.search_placeholder }}</label>
+					<div class="field">
+						<div class="control has-icons-left is-relative">
+							<input class="input" id="q" type="text" name="q" placeholder="{{ settings.search_placeholder }}" value="{{ search.terms }}" x-webkit-speech autocapitalize="off" autocomplete="off" autocorrect="off" />
+							{% include settings.icon, name: 'search', class: 'icon is-left' %}
+						</div>
+					</div>
+					<input type="submit" name="search" class="visuallyhidden" value="" />
+				</div>
+			</form>
+		</div>
+	</div>
+		<div class="container">
+			<div class="three-fifths medium-down--one-whole column">
+			</div>
+			<div class="collection__filters two-fifths medium-down--one-whole column boost-pfs-search-panel-product-show">
+				<div class="field is-grouped is-flex-wrap">
+					<div class="collection__sort-by-filter select">
+						<div class="boost-pfs-filter-top-sorting" class="collection__sort-by-filter select"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-  {% if search.performed %}
-    <div class="container">
-      <div class="one-whole column">
-        <h3 class="search__results-count has-padding-bottom">
-          {% if search.results_count == 0 %}
-            {{ 'general.search.results_count.zero' | t: count: search.results_count }}
-          {% elsif search.results_count == 1 %}
-            {{ 'general.search.results_count.one' | t: count: search.results_count }}
-          {% else %}
-            {{ 'general.search.results_count.other' | t: count: search.results_count }}
-          {% endif %}
-        </h3>
-      </div>
-    </div>
-
-    {% if search.results == empty %}
-      {% comment %} No results {% endcomment %}
-      <div class="search__no-results container">
-        <div class="one-whole column text-align-center has-padding-bottom">
-          <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="one-whole column">
-          <form class="search-form" action="{{ routes.search_url }}">
-            <div class="search__fields">
-              {% if settings.search_option != 'everything' %}
-                <input class="visuallyhidden" type="text" name="type" value="product" />
-              {% endif %}
-              <label for="q" class="visuallyhidden">{{ settings.search_placeholder }}</label>
-              <div class="field">
-                <div class="control has-icons-left is-relative">
-                  {% if settings.enable_autocomplete == true %}
-                    <ul class="predictive-results"></ul>
-                  {% endif %}
-                  <input class="input" id="q" type="text" name="q" placeholder="{{ settings.search_placeholder }}" value="{{ search.terms }}" x-webkit-speech autocapitalize="off" autocomplete="off" autocorrect="off" />
-                  {% render 'icon',
-                          name: 'search',
-                          class: 'icon is-left'
-                  %}
-                </div>
-              </div>
-              <input type="submit" name="search" class="visuallyhidden" value="" />
-            </div>
-          </form>
-        </div>
-      </div>
-    {% else %}
-      {% comment %}Show all search results (including pages){% endcomment %}
-      {% if settings.search_option == 'everything' or search.results.first.price == blank %}
-        <div class="search__results" {% if section.settings.pagination_type != 'basic_pagination' %}data-load-more--grid {% endif %}>
-          {% for item in search.results %}
-            <div class="search__item container has-padding-bottom" {% if section.settings.pagination_type != 'basic_pagination' %}data-load-more--grid-item{% endif %}>
-              {% assign featured_image = false %}
-
-              {% if item.object_type == 'article' and item.featured_media.preview_image %}
-                {% assign featured_image = true %}
-                <div class="one-fourth column search-result__image-container small-down--one-whole">
-                  <a href="{{ item.url }}" title="{{ item.title | escape }}">
-                    {% render 'image-element',
-                            image: item.featured_media.preview_image,
-                            alt: item.featured_media.preview_image.alt
-                    %}
-                  </a>
-                </div>
-              {% elsif item.featured_image %}
-                {% assign featured_image = true %}
-                <div class="one-fourth column search-result__image-container small-down--one-whole">
-                  <a href="{{ item.url }}" title="{{ item.title | escape }}">
-                    {% render 'image-element',
-                            image: item.featured_image,
-                            alt: item.featured_image.alt
-                    %}
-                  </a>
-                </div>
-              {% endif %}
-
-              <div class="search-result__description {% if featured_image %}three-fourths{% else %}one-whole{% endif %} small-down--one-whole column">
-                <h5 class="search-result__title">
-                  <a href="{{ item.url }}" title="{{ item.title | escape }}">{{ item.title }}</a>
-                </h5>
-
-                {% if item.original_price %}
-                  <div class="info">
-                    <span class="price {% if item.compare_at_price_max > item.original_price %}sale{% endif %}">
-                      {% if item.available %}
-                        {% if item.price_varies and item.price_min > 0 %}
-                          <small><em>{{ 'products.general.from' | t }}</em></small>
-                        {% endif %}
-                        {% if item.price_min > 0 %}
-                          <span class="money">
-                            {% render 'price-element', price: item.price_min %}
-                          </span>
-                        {% else %}
-                          {{ settings.free_price_text }}
-                        {% endif %}
-                        {% if item.compare_at_price_max > item.price %}
-                          <span class="was-price">
-                            <span class="money">
-                              {% render 'price-element', price: item.compare_at_price_max %}
-                            </span>
-                          </span>
-                        {% endif %}
-                      {% else %}
-                        <span class="sold-out">{{ 'products.product.sold_out' | t }}</span>
-                      {% endif %}
-                    </span>
-                  </div>
-                {% endif %}
-
-                {% if item.object_type == 'article' %}
-                  <div class="blog_meta">
-                    {% if section.settings.blog_author %}
-                      <p>{{ 'blogs.article.by_author' | t: author: item.author }}</p>
-                    {% endif %}
-
-                    {% if section.settings.blog_date %}
-                      <p>{{ item.published_at | date: format: "month_day_year" }}</p>
-                    {% endif %}
-                  </div>
-                {% endif %}
-
-                {% if item.excerpt %}
-                  <div class="excerpt">{{ item.excerpt | strip_html | truncate: 500 }}</div>
-                {% else %}
-                  <p>
-                    {{ item.content | strip_html | truncatewords: 40 | highlight: search.terms | replace: 'Description', '' | replace: 'Specs', '' | replace: 'Shipping', '' | replace: 'Size', '' }}
-                  </p>
-                {% endif %}
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-        <div class="container">
-          <div class="one-whole column text-align-center has-margin-bottom">
-            {% render 'pagination',
-                    paginate: paginate,
-                    pagination_type: section.settings.pagination_type
-            %}
-          </div>
-        </div>
-        <div class="container">
-          <div class="one-whole column">
-            <div class="search__text-content content">
-              {% if section.settings.text %}
-                {{ section.settings.text }}
-              {% endif %}
-            </div>
-            <form class="search-form" action="{{ routes.search_url }}">
-              <div class="search__fields">
-                {% if settings.search_option != 'everything' %}
-                  <input class="visuallyhidden" type="text" name="type" value="product" />
-                {% endif %}
-                <label for="q" class="visuallyhidden">{{ settings.search_placeholder }}</label>
-                <div class="field">
-                  <div class="control has-icons-left is-relative">
-                    {% if settings.enable_autocomplete == true %}
-                      <ul class="predictive-results"></ul>
-                    {% endif %}
-                    <input class="input" id="q" type="text" name="q" placeholder="{{ settings.search_placeholder }}" value="{{ search.terms }}" x-webkit-speech autocapitalize="off" autocomplete="off" autocorrect="off" />
-                    {% render 'icon',
-                            name: 'search',
-                            class: 'icon is-left'
-                    %}
-                  </div>
-                </div>
-                <input type="submit" name="search" class="visuallyhidden" value="" />
-              </div>
-            </form>
-          </div>
-        </div>
-
-      {% else %}
-        {% assign products = search.results %}
-        {% assign products_per_row = section.settings.products_per_row %}
-        <div class="container" {% if section.settings.pagination_type != 'basic_pagination' %}data-load-more--grid {% endif %}>
-          {% assign limit = section.settings.pagination_limit %}
-          {% render 'product-loop',
-                  limit: limit,
-                  products: products,
-                  products_per_row: products_per_row,
-                  align_height: section.settings.align_height,
-                  height: section.settings.collection_height
-          %}
-        </div>
-        <div class="container">
-          <div class="one-whole column text-align-center has-margin-bottom">
-            {% render 'pagination', paginate: paginate %}
-          </div>
-        </div>
-        <div class="container">
-          <div class="one-whole column">
-            <form class="search-form" action="{{ routes.search_url }}">
-              <div class="search__fields">
-                {% if settings.search_option != 'everything' %}
-                  <input class="visuallyhidden" type="text" name="type" value="product" />
-                {% endif %}
-                <label for="q" class="visuallyhidden">{{ settings.search_placeholder }}</label>
-                <div class="field">
-                  <div class="control has-icons-left is-relative">
-                    {% if settings.enable_autocomplete == true %}
-                      <ul class="predictive-results"></ul>
-                    {% endif %}
-                    <input class="input" id="q" type="text" name="q" placeholder="{{ settings.search_placeholder }}" value="{{ search.terms }}" x-webkit-speech autocapitalize="off" autocomplete="off" autocorrect="off" />
-                    {% render 'icon',
-                            name: 'search',
-                            class: 'icon is-left'
-                    %}
-                  </div>
-                </div>
-                <input type="submit" name="search" class="visuallyhidden" value="" />
-              </div>
-            </form>
-          </div>
-        </div>
-
-      {% endif %}
-    {% endif %}
-
-  {% else %}
-    {% comment %} Default view (no search results) {% endcomment %}
-
-    <div class="container">
-      <div class="one-whole column">
-        <div class="search__text-content content">
-          {% if section.settings.text %}
-            {{ section.settings.text }}
-          {% endif %}
-        </div>
-
-        <form class="search-form" action="{{ routes.search_url }}">
-          <div class="search__fields">
-            {% if settings.search_option != 'everything' %}
-              <input class="visuallyhidden" type="text" name="type" value="product" />
-            {% endif %}
-            <label for="q" class="visuallyhidden">{{ settings.search_placeholder }}</label>
-            <div class="field">
-              <div class="control has-icons-left is-relative">
-                {% if settings.enable_autocomplete == true %}
-                  <ul class="predictive-results"></ul>
-                {% endif %}
-                <input class="input" id="q" type="text" name="q" placeholder="{{ settings.search_placeholder }}" value="{{ search.terms }}" x-webkit-speech autocapitalize="off" autocomplete="off" autocorrect="off" />
-                {% render 'icon',
-                        name: 'search',
-                        class: 'icon is-left'
-                %}
-              </div>
-            </div>
-            <input type="submit" name="search" class="visuallyhidden" value="" />
-          </div>
-        </form>
-      </div>
-    </div>
-
-  {% endif %}
+		{% assign products = search.results %}
+		{% assign products_per_row = section.settings.products_per_row %}
+		<div class="boost-pfs-filter-products container" {% if section.settings.pagination_type != 'basic_pagination' %}data-load-more--grid {% endif %}>
+			{% comment %} Fix Shopify search term report {% endcomment %}
+			{% paginate search.results by 2 %}
+				{% if search.performed %}
+					{% for item in search.results %}
+						<li style="display: none !important"></li>
+					{% endfor %}
+				{% endif %}
+			{% endpaginate %}
+		</div>
+		<div class="container boost-pfs-search-panel-product-show">
+			<div class="one-whole column text-align-center has-margin-bottom">
+				<div class="paginate">
+					<div class="boost-pfs-filter-bottom-pagination"></div>
+					<div class="boost-pfs-filter-load-more"></div>
+				</div>
+			</div>
+		</div>
 
 </main>
 
 {% comment %} JavaScript {% endcomment %}
 <script
-  type="application/json"
-  data-section-id="{{ section.id }}"
-  data-section-data
+	type="application/json"
+	data-section-id="{{ section.id }}"
+	data-section-data
 >
-  {
-    "enable_breadcrumb": {{ section.settings.search_breadcrumb | json }},
-    "pagination_type": {{ section.settings.pagination_type | json }},
-    "number_of_pages": {{ paginate.pages | json }}
-  }
+	{
+		"enable_breadcrumb": {{ section.settings.search_breadcrumb | json }},
+		"pagination_type": {{ section.settings.pagination_type | json }},
+		"number_of_pages": {{ paginate.pages | json }}
+	}
 </script>
 
-{% endpaginate %}
+{% comment %} Remove theme's search code to prevent conflict {% endcomment %}
+{% comment %} <script src="{{ 'z__jsSearch.js' | asset_url }}"></script> {% endcomment %}
 
-<script src="{{ 'z__jsSearch.js' | asset_url }}"></script>
+<script>
+	// Declare boostPFSThemeConfig variable
+	var boostPFSThemeConfig = {
+		label: {
+			sorting: {% assign temp = 'collections.sorting.title' | t  %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Sorting" {% endunless %},
+			sorting_best_selling: {% assign temp = 'collections.sorting.best_selling' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Best Selling" {% endunless %},
+			sorting_featured: {% assign temp = 'collections.sorting.featured' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Featured" {% endunless %},
+			sorting_title_ascending: {% assign temp = 'collections.sorting.az' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Alphabetically, A-Z" {% endunless %},
+			sorting_title_descending: {% assign temp = 'collections.sorting.za' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Alphabetically, Z-A" {% endunless %},
+			sorting_price_ascending: {% assign temp = 'collections.sorting.price_ascending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Lowest Price" {% endunless %},
+			sorting_price_descending: {% assign temp = 'collections.sorting.price_descending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Highest Price" {% endunless %},
+			sorting_date_ascending: {% assign temp = 'collections.sorting.date_ascending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Date, Old to New" {% endunless %},
+			sorting_date_descending: {% assign temp = 'collections.sorting.date_descending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Date, New to Old" {% endunless %},
+			sorting_sale_descending: {% assign temp = 'collections.sorting.sale_descending' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "% Off" {% endunless %},
+			sorting_relevance: {% assign temp = 'collections.sorting.relevance' | t %} {% unless temp contains 'translation missing'  %} "{{ temp }}" {% else %} "Relevance" {% endunless %},
 
+			sale: {{ 'collections.general.sale' | t | json }},
+			best_seller: {{ 'collections.general.best_seller' | t | json }},
+			coming_soon: {{ 'collections.general.coming_soon' | t | json }},
+			new: {{ 'collections.general.new' | t | json }},
+			pre_order: {{ 'collections.general.pre_order' | t | json }},
+			staff_pick: {{ 'collections.general.staff_pick' | t | json }},
+			sold_out: {{ 'products.product.sold_out' | t | json }},
+			from: {{ 'products.general.from' | t | json }},
+			previous: {{ 'general.pagination.previous' | t | json }},
+			next: {{ 'general.pagination.next' | t | json }},
+		},
+		custom: {
+			products_per_page: {% if section.settings.pagination_limit %} {{ section.settings.pagination_limit | json }} {% else %} 48 {% endif %},
+			products_per_row: {% if section.settings.products_per_row %} {{ section.settings.products_per_row | json }} {% else %} 3 {% endif %},
+			mobile_products_per_row: {% if section.settings.mobile_products_per_row %} {{ section.settings.mobile_products_per_row | json }} {% else %} 2 {% endif %},
+			pagination_type: {% if section.settings.pagination_type %} {{ section.settings.pagination_type | json }} {% else %} "basic_pagination" {% endif %},
+			enable_quickshop: {% if settings.enable_quickshop != nil %} {{ settings.enable_quickshop | json }} {% else %} true {% endif %},
+			stickers_enabled: {% if settings.stickers_enabled != nil %} {{ settings.stickers_enabled | json }} {% else %} true {% endif %},
+			sticker_shape: {% if settings.sticker_shape %} {{ settings.sticker_shape | json }} {% else %} "square" {% endif %},
+			sticker_position: {% if settings.sticker_position %} {{ settings.sticker_position | json }} {% else %} "left" {% endif %},
+			thumbnail_hover_enabled: {% if settings.thumbnail_hover_enabled != nil %} {{ settings.thumbnail_hover_enabled | json }} {% else %} true {% endif %},
+			thumbnail_text_alignment: {% if settings.thumbnail_text_alignment %} {{ settings.thumbnail_text_alignment | json }} {% else %} "center" {% endif %},
+			align_height: {% if section.settings.align_height != nil %} {{ section.settings.align_height | json }} {% else %} false {% endif %},
+			collection_height: {% if section.settings.collection_height != nil %} {{ section.settings.collection_height | json }} {% else %} 200 {% endif %},
+			image_loading_style: {% if settings.image_loading_style %} {{ settings.image_loading_style | json }} {% else %} "fade-in" {% endif %},
+			show_secondary_image: {% if settings.show_secondary_image != nil %} {{ settings.show_secondary_image | json }} {% else %} false {% endif %},
+			display_vendor: {% if settings.display_vendor != nil %} {{ settings.display_vendor | json }} {% else %} false {% endif %},
+			free_price_text: {% if settings.free_price_text %} {{ settings.free_price_text | json }} {% else %} "Free" {% endif %},
+			collection_swatches: {% if settings.collection_swatches != nil %} {{ settings.collection_swatches | json }} {% else %} true {% endif %},
+			collection_swatches_shape: {% if settings.collection_swatches_shape %} {{ settings.collection_swatches_shape | json }} {% else %} "square" {% endif %},
+			enable_shopify_collection_badges: {% if settings.enable_shopify_collection_badges != nil %} {{ settings.enable_shopify_collection_badges | json }} {% else %} false {% endif %},
+			enable_shopify_review_comments: {% if settings.enable_shopify_review_comments != nil %} {{ settings.enable_shopify_review_comments | json }} {% else %} false {% endif %},
+			show_multiple_currencies: {% if settings.show_multiple_currencies != nil %} {{ settings.show_multiple_currencies | json }} {% else %} false {% endif %},
+		}
+	};
+</script>
 {% schema %}
+
 
 {
   "name": "Search",

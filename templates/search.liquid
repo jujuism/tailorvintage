@@ -1,36 +1,71 @@
 {% comment %}
-  To edit the contents of this file, look inside the `sections` folder for the file name that comes directly after `section`. Eg. {% section 'product__main' %} or {% section 'page__banner' %}
+	To edit the contents of this file, look inside the `sections` folder for the file name that comes directly after `section`. Eg. {% section 'product__main' %} or {% section 'page__banner' %}
 {% endcomment %}
 
 <div id="template-{{ template | replace: '.', '-' | handle }}" class="shopify-section search-page" data-check-for-order="true">
-  {% comment %} Search banner {% endcomment %}
-  {% section 'search__banner' %}
-  <section class="section__wrapper
-                  section
-                  ">
-    <div class="container breadcrumb__container">
-      <div class="one-whole column has-padding-bottom">
-        <div class="breadcrumb__wrapper">
-          {% render 'breadcrumb', context: 'search' %}
-        </div>
-      </div>
-    </div>
+	{% comment %} Search banner {% endcomment %}
+	{% section 'search__banner' %}
+	<section class="section__wrapper
+									section
+									">
+		<div class="container breadcrumb__container">
+			<div class="one-whole column has-padding-bottom">
+				<div class="breadcrumb__wrapper">
+					{% include 'breadcrumb', type: 'search' %}
+				</div>
+			</div>
+		</div>
 
-    {% comment %} Search title {% endcomment %}
-    <header class="container hide-when-banner-enabled">
-      {% capture heading_title %}{{ 'general.search.title' | t }}{% endcapture %}
-      {% render 'heading',
-              title: heading_title,
-              heading_tag: 'h1',
-              context: 'search-page',
-              text_alignment: 'left'
-      %}
-    </header>
+		{% comment %} Search title {% endcomment %}
+		<header class="container hide-when-banner-enabled">
+			{% capture heading_title %}{{ 'general.search.title' | t }}{% endcapture %}
+			{% include 'heading', title: heading_title, heading_tag: 'h1', context: 'search-page', text_alignment: 'left' %}
+		</header>
+		<h2 class="boost-pfs-search-result-header"></h2>
+		<div class="boost-pfs-search-result-toolbar">
+				<div class="boost-pfs-search-result-item">
+						<ul class="boost-pfs-search-result-panel-controls">
+								<li>{% include 'boost-pfs-filter-skeleton', width: 2 %}</li>
+								<li>{% include 'boost-pfs-filter-skeleton', width: 2 %}</li>
+								<li>{% include 'boost-pfs-filter-skeleton', width: 1 %}</li>
+						</ul>
+				</div>
+					<div class="boost-pfs-search-result-item">
+						<span class="boost-pfs-search-total-result">
+								{% include 'boost-pfs-filter-skeleton', width: 2 %}
+						</span>
+				</div>
+		</div>
 
-    {% comment %} Search sidebar and main content area {% endcomment %}
-    <div class="container search__content">
-      {% section 'search__sidebar' %}
-      {% section 'search__main' %}
-    </div>
-  </section>
+		{% comment %} Search sidebar and main content area {% endcomment %}
+		<div class="container search__content">
+			<div class="boost-pfs-filter-sidebar">
+				<aside class="one-whole column has-padding-bottom"> 
+					<div class="boost-pfs-filter-tree-mobile-button">{% include 'boost-pfs-filter-skeleton', type: 'button' %}</div>
+					<div class="boost-pfs-filter-tree boost-pfs-filter-tree-v"></div>
+				</aside>
+				{% comment %} Search sidebar {% endcomment %}
+				{% section 'search__sidebar' %}
+			</div>
+			{% comment %} Search main {% endcomment %}
+			{% section 'search__main' %}
+		</div>
+
+		<div class="boost-pfs-search-result-wrap boost-hidden">
+			<div class="boost-pfs-search-result-collections">
+				<div class="boost-pfs-search-result-list-item"><a href="#">{% include 'boost-pfs-filter-skeleton', width: 4 %}</a></div>
+				<div class="boost-pfs-search-result-list-item"><a href="#">{% include 'boost-pfs-filter-skeleton', width: 3 %}</a></div>
+				<div class="boost-pfs-search-result-list-item"><a href="#">{% include 'boost-pfs-filter-skeleton', width: 4 %}</a></div>
+			</div>
+			<div class="one-whole column text-align-center has-margin-bottom"><div class="paginate"><div class="boost-pfs-search-result-collection-pagination">{% include 'boost-pfs-filter-skeleton', width: 4 %}</div></div></div>
+		</div>
+		<div class="boost-pfs-search-result-wrap boost-hidden">
+			<div class="boost-pfs-search-result-pages">
+				<div class="boost-pfs-search-result-list-item"><a href="#">{% include 'boost-pfs-filter-skeleton', width: 4 %}</a></div>
+				<div class="boost-pfs-search-result-list-item"><a href="#">{% include 'boost-pfs-filter-skeleton', width: 3 %}</a></div>
+				<div class="boost-pfs-search-result-list-item"><a href="#">{% include 'boost-pfs-filter-skeleton', width: 4 %}</a></div>
+			</div>
+			<div class="one-whole column text-align-center has-margin-bottom"><div class="paginate"><div class="boost-pfs-search-result-page-pagination">{% include 'boost-pfs-filter-skeleton', width: 4 %}</div></div></div>
+		</div>
+	</section>
 </div>

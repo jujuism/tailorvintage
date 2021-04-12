@@ -2548,6 +2548,7 @@ $subtitle-negative-margin: -1.25rem !default;
 
   @include flexbox();
   @include flex-wrap(wrap);
+  justify-content: space-between;
 
   .column,
   .columns {

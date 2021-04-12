@@ -93,6 +93,12 @@
   {% if collection.next_product %}<link rel="next" href="{{ collection.next_product }}">{% endif %}
 
   {% render 'zoorix-cart-items' %}
+
+<!--begin-boost-pfs-filter-css-->
+  {% render 'boost-pfs-style' %}
+<!--end-boost-pfs-filter-css-->
+
+
 </head>
 
 {% if template.name == 'index' %}
@@ -230,10 +236,16 @@
     {% if template contains "blog" or template contains "article" or template contains "index" %}
       <script id="dsq-count-scr" src="//{{ settings.disqus_shortname }}.disqus.com/count.js" async></script>
     {% endif %}
+
+  <script src="//cdn.codeblackbelt.com/js/modules/also-bought/main.min.js?shop=tailorvintage.myshopify.com" defer></script>
   {% endif %}
 
 {% render 'preorder-now' %}
   {{ 'https://lookbook.nitroapps.co/public/shop-libs/nitro-lookbook.js' | script_tag }}
+
+<!--begin-boost-pfs-js-->
+  {% render 'boost-pfs' %}
+<!--end-boost-pfs-js-->
 </body>
 </html>
 {% endcapture %}
