@@ -2548,7 +2548,6 @@ $subtitle-negative-margin: -1.25rem !default;
 
   @include flexbox();
   @include flex-wrap(wrap);
-  justify-content: space-between;
 
   .column,
   .columns {
@@ -15455,4 +15454,8 @@ div#shopify-section-collection__sidebar {
   -moz-border-radius: 0%;
   -webkit-border-radius: 0%;
   border-radius: 0%;
+}
+
+.container.collection__content {
+    justify-content: space-between;
 }

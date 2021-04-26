@@ -70,7 +70,7 @@
   }
 
   .boost-pfs-filter-sidebar {
-    width: 20%;
+    width: 16%;
   }
 
   #shopify-section-collection__main, #shopify-section-search__main {
@@ -124,7 +124,11 @@ span.boost-pfs-filter-option-amount {
 }
 
 .boost-pfs-filter-option-content .boost-pfs-filter-option-item-list.boost-pfs-filter-option-item-list-swatch.circle-grid li .boost-pfs-filter-option-swatch-image {
-  -moz-border-radius: 0%;
-  -webkit-border-radius: 0%;
-  border-radius: 0%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.boost-pfs-filter-option-content .boost-pfs-filter-option-item-list.boost-pfs-filter-option-item-list-swatch .boost-pfs-filter-option-item:hover .boost-pfs-filter-option-swatch-image:before {
+    border-color: transparent;
 }
